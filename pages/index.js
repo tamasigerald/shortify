@@ -6,7 +6,7 @@ export default function Home() {
   const [ data, setData ] = useState(null);
 
   const getAPI = () => {
-    fetch('/api/hello')
+    fetch('/api/shorturl')
     .then(res => res.json())
     .then(res => setData(res))
     .catch(err => console.error(err));
@@ -26,7 +26,18 @@ export default function Home() {
       </header>
 
       <main className="main">
-        {data && data.name}
+        <form className="form">
+          <label className="form__label">Insert link</label>
+          <div>
+            <input 
+            className="form__input"
+            name="original" 
+            type="text" 
+            placeholder="www.shortify.com"
+            />
+            <button className="btn btn--primary form_btn">Shortify</button>
+          </div>
+        </form>
       </main>
 
       <footer className="footer">
