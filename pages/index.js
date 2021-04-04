@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
@@ -5,14 +6,14 @@ export default function Home() {
   
   const [ data, setData ] = useState(null);
 
-  const getAPI = () => {
-    fetch('/api/shorturl')
-    .then(res => res.json())
-    .then(res => setData(res))
-    .catch(err => console.error(err));
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const inputValue = e.target[0].value;
 
-  useEffect(getAPI, []);
+    axios.post('/api/shorturl/new', {url: inputValue})
+    .then(res => setData(res.data))
+    .catch(err => setData(err.response.data));
+  }
 
   return (
     <div className="container">
@@ -26,7 +27,7 @@ export default function Home() {
       </header>
 
       <main className="main">
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit} >
           <label className="form__label">Insert link</label>
           <div>
             <input 
@@ -38,6 +39,11 @@ export default function Home() {
             <button className="btn btn--primary form_btn">Shortify</button>
           </div>
         </form>
+        <div className={`grid ${data && 'response'}`}>
+        {data && data.original_url ? <div className="response--success">Original url: <span><a href={`https://${data.original_url}`} target="_blank" >{data.original_url}</a></span></div> : ''}
+        {data && data.short_url ? <div className="response--success">Short url: <span><a href={`/api/shorturl/${data.short_url}`} target="_blank" >{data.short_url}</a></span></div> : ''}
+        {data && data.error ? <div className="response--error">{data.error}</div> : ''}
+        </div>
       </main>
 
       <footer className="footer">
