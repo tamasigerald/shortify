@@ -20,7 +20,9 @@ export default function Home() {
     const inputValue = e.target[0].value;
 
     axios.post('/api/shorturl/new', {url: inputValue})
-    .then(res => setData(res.data))
+    .then(res => {
+      setData(res.data)
+    })
     .catch(err => setData(err.response.data));
   }
 
