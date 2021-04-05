@@ -5,6 +5,15 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   
   const [ data, setData ] = useState(null);
+  const [ origin, setOrigin ] = useState(null);
+  const [ host, setHost ] = useState(null);
+
+  const getLocation = () => {
+    if (typeof window !== undefined) {
+      setOrigin(window.location.origin);
+      setHost(window.location.host);
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +23,8 @@ export default function Home() {
     .then(res => setData(res.data))
     .catch(err => setData(err.response.data));
   }
+
+  useEffect(getLocation, []);
 
   return (
     <div className="container">
@@ -41,7 +52,7 @@ export default function Home() {
         </form>
         <div className={`grid ${data && 'response'}`}>
         {data && data.original_url ? <div className="response--success">Original url: <span><a href={`https://${data.original_url}`} target="_blank" >{data.original_url}</a></span></div> : ''}
-        {data && data.short_url ? <div className="response--success">Short url: <span><a href={`/api/shorturl/${data.short_url}`} target="_blank" >{data.short_url}</a></span></div> : ''}
+        {data && data.short_url ? <div className="response--success">Short url: <span><a href={`${origin}/api/shorturl/${data.short_url}`} target="_blank" >{host}/{data.short_url}</a></span></div> : ''}
         {data && data.error ? <div className="response--error">{data.error}</div> : ''}
         </div>
       </main>

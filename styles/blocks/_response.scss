@@ -8,11 +8,14 @@
     &--success {
         font-size: 2.5rem;
         margin: 2rem 0;
+        max-width: 100%;
 
         span {
             color: $c-blue;
             font-size: 4.5rem;
             font-weight: $t-bold;
+            word-wrap: break-word;
+            max-width: 100%;
         }
     }
 
