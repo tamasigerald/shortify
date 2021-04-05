@@ -1,8 +1,7 @@
 import Cors from 'cors';
 
 const cors = Cors({
-    methods: ['GET', 'POST'],
-    origin: "https://www.freecodecamp.org/"
+    methods: ['GET', 'POST']
 });
 
 export default function enableCors(req, res, fn) {
