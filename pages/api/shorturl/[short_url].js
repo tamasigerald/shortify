@@ -1,3 +1,4 @@
+import enableCors from '../../../middleware/cors';
 import connectDB from '../../../middleware/mongo';
 import Url from '../../../models/Url';
 
@@ -6,6 +7,7 @@ export default async (req, res) => {
     const { method, query } = req;
 
     await connectDB();
+    await enableCors();
 
     const urlID = query.short_url;
 

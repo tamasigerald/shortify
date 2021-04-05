@@ -1,6 +1,7 @@
 import dns from 'dns';
 import { nanoid } from 'nanoid';
 import urlExists from 'url-exists-deep';
+import enableCors from '../../../middleware/cors';
 
 import connectDB from '../../../middleware/mongo';
 import Url from '../../../models/Url';
@@ -10,6 +11,7 @@ export default async (req, res) => {
     const { method, body } = req;
 
     await connectDB();
+    await enableCors();
 
     switch(method) {
         case 'POST':
