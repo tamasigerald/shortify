@@ -2,12 +2,17 @@ import enableCors from '../../../middleware/cors';
 import connectDB from '../../../middleware/mongo';
 import Url from '../../../models/Url';
 
+const cors = Cors({
+    methods: ['GET', 'POST']
+});
+
+
 export default async (req, res) => {
 
     const { method, query } = req;
 
     await connectDB();
-    await enableCors();
+    await enableCors(req, res, cors);
 
     const urlID = query.short_url;
 
