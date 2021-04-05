@@ -3,8 +3,7 @@ import connectDB from '../../../middleware/mongo';
 import Url from '../../../models/Url';
 
 const cors = Cors({
-    methods: ['GET', 'POST'],
-    origin: "https://www.freecodecamp.org"
+    methods: ['GET', 'POST']
 });
 
 
