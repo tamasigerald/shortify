@@ -7,6 +7,7 @@ export default function Home() {
   const [ data, setData ] = useState(null);
   const [ origin, setOrigin ] = useState(null);
   const [ host, setHost ] = useState(null);
+  const [ loader, setLoader ] = useState(false);
 
   const getLocation = () => {
     if (typeof window !== undefined) {
@@ -16,14 +17,19 @@ export default function Home() {
   }
 
   const handleSubmit = (e) => {
+    setLoader(true);
     e.preventDefault();
     const inputValue = e.target[0].value;
 
     axios.post('/api/shorturl/new', {url: inputValue})
     .then(res => {
-      setData(res.data)
+      setData(res.data);
+      setLoader(false);
     })
-    .catch(err => setData(err.response.data));
+    .catch(err => {
+      setData(err.response.data);
+      setLoader(false);
+    });
   }
 
   useEffect(getLocation, []);
@@ -52,12 +58,16 @@ export default function Home() {
             <button className="btn btn--primary form_btn">Shortify</button>
           </div>
         </form>
+        {loader && <div className={`loader`}>
+        <div className="lds-facebook"><div></div><div></div><div></div></div>
+        </div>}
         <div className={`grid ${data && 'response'}`}>
         {data && data.original_url ? <div className="response--success">Original url: <span><a href={`https://${data.original_url}`} target="_blank" >{data.original_url}</a></span></div> : ''}
         {data && data.short_url ? <div className="response--success">Short url: <span><a href={`${origin}/api/shorturl/${data.short_url}`} target="_blank" >{host}/{data.short_url}</a></span></div> : ''}
         {data && data.error ? <div className="response--error">{data.error}</div> : ''}
         </div>
       </main>
+
 
       <footer className="footer">
       <div>
@@ -72,6 +82,7 @@ export default function Home() {
           </a>
       </div>
       </footer>
+
     </div>
   )
 }
