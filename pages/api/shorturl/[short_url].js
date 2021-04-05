@@ -1,10 +1,22 @@
-import enableCors from '../../../middleware/cors';
 import connectDB from '../../../middleware/mongo';
 import Url from '../../../models/Url';
+import Cors from 'cors';
+
 
 const cors = Cors({
     methods: ['GET', 'POST']
 });
+
+function enableCors(req, res, fn) {
+    return new Promise((resolve, reject) => {
+        fn(req,res, (result) => {
+        if (result instanceof Error) {
+            return reject(result);
+        }
+        return resolve(result);
+        })
+    })
+}
 
 
 export default async (req, res) => {
