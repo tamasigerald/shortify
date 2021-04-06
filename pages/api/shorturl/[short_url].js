@@ -27,6 +27,8 @@ export default async (req, res) => {
     await connectDB();
     await enableCors(req, res, cors);
 
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
     const urlID = query.short_url;
 
     switch (method) {
