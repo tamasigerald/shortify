@@ -4,7 +4,8 @@ import Cors from 'cors';
 
 
 const cors = Cors({
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST'],
+    origin: '*'
 });
 
 function enableCors(req, res, fn) {

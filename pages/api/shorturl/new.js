@@ -9,6 +9,7 @@ import Url from '../../../models/Url';
 
 const cors = Cors({
     methods: ['GET', 'POST'],
+    origin: '*'
 });
 
 function runMiddleware(req, res, fn) {
