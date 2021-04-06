@@ -25,7 +25,7 @@ export default async (req, res) => {
     const { method, body } = req;
 
     await connectDB();
-    // await enableCors(req, res, cors);
+    await enableCors(req, res, cors);
 
     switch(method) {
         case 'POST':
