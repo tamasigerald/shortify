@@ -30,8 +30,6 @@ export default async (req, res) => {
     await connectDB();
     await runMiddleware(req, res, cors);
 
-    req.setHeader("Access-Control-Allow-Origin", "*");
-
     switch(method) {
         case 'POST':
             try {
